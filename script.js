@@ -234,17 +234,29 @@ class EncryptedMessage {
     }
 
     setupDecryptionListener() {
-        const handleKeyDown = (event) => {
-            if (event.key === "touchstart" && !this.isDecrypting) {
-                this.isDecrypting = true;
-                this.menuElement.textContent = this.encryptedDisplayText;
-                this.randomizeText();
-                document.removeEventListener('keydown', handleKeyDown);
-            }
-        };
+    const handleAction = () => {
+        if (!this.isDecrypting) {
+            this.isDecrypting = true;
+            this.menuElement.textContent = this.encryptedDisplayText;
+            this.randomizeText();
+            document.removeEventListener('touchstart', handleTouchStart);
+            document.removeEventListener('keydown', handleKeyDown);
+        }
+    };
 
-        document.addEventListener('keydown', handleKeyDown);
-    }
+    const handleTouchStart = () => {
+        handleAction();
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === "Enter") {
+            handleAction();
+        }
+    };
+
+    document.addEventListener('touchstart', handleTouchStart);
+    document.addEventListener('keydown', handleKeyDown);
+}
 
     randomizeText() {
         let randomizeCount = 0;
@@ -347,3 +359,4 @@ window.addEventListener('beforeunload', () => {
     }
 
 });
+
