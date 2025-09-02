@@ -235,7 +235,7 @@ class EncryptedMessage {
 
     setupDecryptionListener() {
         const handleKeyDown = (event) => {
-            if (event.key === "Enter" && !this.isDecrypting) {
+            if (event.key === "touchstart" && !this.isDecrypting) {
                 this.isDecrypting = true;
                 this.menuElement.textContent = this.encryptedDisplayText;
                 this.randomizeText();
@@ -345,4 +345,5 @@ window.addEventListener('beforeunload', () => {
     if (encryptedMessage) {
         encryptedMessage.destroy();
     }
+
 });
